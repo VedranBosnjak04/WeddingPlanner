@@ -12,7 +12,7 @@ public class Mutation
         string kontakt,
         TipPartnera tip,
         decimal provizija,
-        [ScopedService] AppDbContext context)
+        [Service] AppDbContext context)
     {
         var partner = new Partner
         {
@@ -30,11 +30,10 @@ public class Mutation
     public async Task<Partner> AzurirajProviziju(
         int partnerId,
         decimal novaProvizija,
-        [ScopedService] AppDbContext context)
+        [Service] AppDbContext context)
     {
         var partner = await context.Partneri.FindAsync(partnerId)
             ?? throw new Exception($"Partner ID={partnerId} nije pronađen.");
-
         partner.Provizija = novaProvizija;
         await context.SaveChangesAsync();
         return partner;
@@ -43,11 +42,10 @@ public class Mutation
     public async Task<Bend> PostaviStatusBenda(
         int bendId,
         StatusBenda status,
-        [ScopedService] AppDbContext context)
+        [Service] AppDbContext context)
     {
         var bend = await context.Bendovi.FindAsync(bendId)
             ?? throw new Exception($"Bend ID={bendId} nije pronađen.");
-
         bend.Status = status;
         await context.SaveChangesAsync();
         return bend;
@@ -57,7 +55,7 @@ public class Mutation
         string nazivPara,
         DateTime datumDogadaja,
         int tipVjencanjaId,
-        [ScopedService] AppDbContext context)
+        [Service] AppDbContext context)
     {
         var dogadaj = new Dogadaj
         {
@@ -77,7 +75,7 @@ public class Mutation
         TipStavke tip,
         decimal iznosOsnovni,
         decimal provizija,
-        [ScopedService] AppDbContext context)
+        [Service] AppDbContext context)
     {
         var stavka = new RacunStavka
         {
