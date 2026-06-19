@@ -1,0 +1,70 @@
+﻿@model IEnumerable<WeddingPlanner.Core.Models.Bend>
+@using WeddingPlanner.Core.Models
+@{
+    ViewData["Title"] = "Bendovi i DJ-evi";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Bendovi i DJ-evi</h2>
+    <a asp-action="Dodaj" class="btn btn-success">Dodaj bend/DJ</a>
+</div>
+
+@if (TempData["Uspjeh"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["Uspjeh"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    <a asp-action="Index" asp-route-sort="@(ViewBag.CurrentSort == "naziv" ? "naziv_desc" : "naziv")"
+                       class="text-white text-decoration-none">Naziv partnera</a>
+                </th>
+                <th>Tip</th>
+                <th>
+                    <a asp-action="Index" asp-route-sort="@(ViewBag.CurrentSort == "status" ? "status_desc" : "status")"
+                       class="text-white text-decoration-none">Status</a>
+                </th>
+                <th>Akcije</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var b in Model)
+            {
+                <tr>
+                    <td><strong>@b.Partner.Naziv</strong></td>
+                    <td>@(b.JeDJ ? "DJ" : "Bend")</td>
+                    <td>
+                        <span class="badge @(b.Status == StatusBenda.Slobodan ? "bg-success" : "bg-danger")">
+                            @b.Status.ToString()
+                        </span>
+                    </td>
+                    <td>
+                        <a asp-action="Detalji" asp-route-id="@b.Id" class="btn btn-sm btn-outline-info">Detalji</a>
+                        <a asp-action="Uredi" asp-route-id="@b.Id" class="btn btn-sm btn-outline-warning">Uredi</a>
+                        <a asp-action="Obrisi" asp-route-id="@b.Id" class="btn btn-sm btn-outline-danger">Obriši</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (ViewBag.TotalPages > 1)
+{
+    <nav>
+        <ul class="pagination justify-content-center">
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@i" asp-route-sort="@ViewBag.CurrentSort">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

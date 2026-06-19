@@ -1,0 +1,17 @@
+﻿@model WeddingPlanner.Core.Models.Bend
+@{
+    ViewData["Title"] = "Obriši bend";
+}
+
+<div class="alert alert-danger">
+    <h4>Potvrda brisanja</h4>
+    <p>Sigurno želite obrisati <strong>@Model.Partner.Naziv</strong>?</p>
+</div>
+
+<form asp-action="Obrisi">
+    <input asp-for="Id" type="hidden" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">Da, obriši</button>
+        <a asp-action="Index" class="btn btn-secondary">Odustani</a>
+    </div>
+</form>

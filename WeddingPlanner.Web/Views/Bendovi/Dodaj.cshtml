@@ -1,0 +1,44 @@
+﻿@model WeddingPlanner.Core.Models.Bend
+@{
+    ViewData["Title"] = "Dodaj bend/DJ";
+}
+
+<h2>Dodaj novi bend ili DJ-a</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Dodaj">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="PartnerId" class="form-label">Partner</label>
+                <select asp-for="PartnerId" class="form-select" asp-items="ViewBag.Partneri">
+                    <option value="">-- Odaberi partnera --</option>
+                </select>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input asp-for="JeDJ" class="form-check-input" type="checkbox" />
+                <label asp-for="JeDJ" class="form-check-label">Ovo je DJ (ne klasičan bend)</label>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Status" class="form-label">Status</label>
+                <select asp-for="Status" class="form-select"
+                        asp-items="Html.GetEnumSelectList<WeddingPlanner.Core.Models.StatusBenda>()"></select>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success">Spremi</button>
+                <a asp-action="Index" class="btn btn-secondary">Odustani</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
