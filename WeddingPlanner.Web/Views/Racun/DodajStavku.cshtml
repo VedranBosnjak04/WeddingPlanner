@@ -1,0 +1,38 @@
+﻿@model WeddingPlanner.Core.Models.RacunStavka
+@{
+    ViewData["Title"] = "Dodaj stavku računa";
+}
+
+<h2>Dodaj stavku računa</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="DodajStavku">
+            <input type="hidden" asp-for="DogadajId" value="@ViewBag.DogadajId" />
+
+            <div class="mb-3">
+                <label asp-for="Opis" class="form-label">Opis (npr. "Bend - 3h vikend")</label>
+                <input asp-for="Opis" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Tip" class="form-label">Tip stavke</label>
+                <select asp-for="Tip" class="form-select"
+                        asp-items="Html.GetEnumSelectList<WeddingPlanner.Core.Models.TipStavke>()"></select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="IznosOsnovni" class="form-label">Osnovni iznos (KM)</label>
+                <input asp-for="IznosOsnovni" class="form-control" type="number" step="0.01" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Provizija" class="form-label">Provizija agencije (%)</label>
+                <input asp-for="Provizija" class="form-control" type="number" step="0.1" />
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success">Spremi</button>
+                <a asp-action="Index" asp-route-dogadajId="@ViewBag.DogadajId" class="btn btn-secondary">Odustani</a>
+            </div>
+        </form>
+    </div>
+</div>
