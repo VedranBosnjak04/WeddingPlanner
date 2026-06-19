@@ -1,0 +1,89 @@
+@model IEnumerable<WeddingPlanner.Core.Models.Partner>
+    @using WeddingPlanner.Core.Models
+    @{
+    ViewData["Title"] = "Partneri agencije";
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Partneri agencije</h2>
+        <a asp-action="Dodaj" class="btn btn-success">Dodaj partnera</a>
+    </div>
+
+    @if (TempData["Uspjeh"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["Uspjeh"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+    <form asp-action="Index" method="get" class="row g-2 mb-3">
+        <div class="col-md-4">
+            <input type="text" name="filter" value="@ViewBag.CurrentFilter"
+                   class="form-control" placeholder="Pretraži po nazivu ili kontaktu..." />
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-primary">Pretraži</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Resetuj</a>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>
+                        <a asp-action="Index"
+                           asp-route-sort="@(ViewBag.CurrentSort == "naziv" ? "naziv_desc" : "naziv")"
+                           asp-route-filter="@ViewBag.CurrentFilter"
+                           class="text-white text-decoration-none">Naziv</a>
+                    </th>
+                    <th>
+                        <a asp-action="Index"
+                           asp-route-sort="@(ViewBag.CurrentSort == "tip" ? "tip_desc" : "tip")"
+                           asp-route-filter="@ViewBag.CurrentFilter"
+                           class="text-white text-decoration-none">Tip partnera</a>
+                    </th>
+                    <th>Kontakt</th>
+                    <th>
+                        <a asp-action="Index"
+                           asp-route-sort="@(ViewBag.CurrentSort == "provizija" ? "provizija_desc" : "provizija")"
+                           asp-route-filter="@ViewBag.CurrentFilter"
+                           class="text-white text-decoration-none">Provizija %</a>
+                    </th>
+                    <th>Akcije</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model)
+            {
+                <tr>
+                    <td><strong>@p.Naziv</strong></td>
+                    <td><span class="badge bg-primary">@p.Tip.ToString()</span></td>
+                    <td>@p.Kontakt</td>
+                    <td>@p.Provizija.ToString("F1")%</td>
+                    <td>
+                        <a asp-action="Detalji" asp-route-id="@p.Id" class="btn btn-sm btn-outline-info">Detalji</a>
+                        <a asp-action="Uredi" asp-route-id="@p.Id" class="btn btn-sm btn-outline-warning">Uredi</a>
+                        <a asp-action="Obrisi" asp-route-id="@p.Id" class="btn btn-sm btn-outline-danger">Obriši</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    @if (ViewBag.TotalPages > 1)
+{
+    <nav>
+        <ul class="pagination justify-content-center">
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@i"
+                   asp-route-sort="@ViewBag.CurrentSort" asp-route-filter="@ViewBag.CurrentFilter">@i</a>
+            </li>
+            }
+        </ul>
+    </nav>
+}

@@ -1,0 +1,97 @@
+@model WeddingPlanner.Core.Models.Partner
+@using WeddingPlanner.Core.Models
+@{
+    ViewData["Title"] = Model.Naziv;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>@Model.Naziv</h2>
+    <div>
+        <a asp-action="Uredi" asp-route-id="@Model.Id" class="btn btn-warning">Uredi</a>
+        <a asp-action="Index" class="btn btn-secondary">Nazad</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header bg-dark text-white">Osnovni podaci</div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Tip partnera</dt>
+                    <dd class="col-sm-8"><span class="badge bg-primary">@Model.Tip.ToString()</span></dd>
+                    <dt class="col-sm-4">Adresa</dt>
+                    <dd class="col-sm-8">@Model.Adresa</dd>
+                    <dt class="col-sm-4">Kontakt</dt>
+                    <dd class="col-sm-8">@Model.Kontakt</dd>
+                    <dt class="col-sm-4">Provizija</dt>
+                    <dd class="col-sm-8"><strong>@Model.Provizija.ToString("F1")%</strong></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Bend != null)
+    {
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                @(Model.Bend.JeDJ ? "DJ Info" : "Bend Info")
+            </div>
+            <div class="card-body">
+                <p>
+                    Status:
+                    <span class="badge @(Model.Bend.Status == StatusBenda.Slobodan ? "bg-success" : "bg-danger")">
+                        @Model.Bend.Status.ToString()
+                    </span>
+                </p>
+                <h6>Playliste:</h6>
+                <ul>
+                    @foreach (var pl in Model.Bend.Playliste)
+                        {
+                    <li>@pl.Naziv — <em>@pl.Zanr</em></li>
+                        }
+                </ul>
+                <h6 class="mt-3">Cijene:</h6>
+                <table class="table table-sm">
+                    <thead><tr><th>Kategorija</th><th>Trajanje</th><th>Cijena</th></tr></thead>
+                    <tbody>
+                        @foreach (var c in Model.Bend.Cijene.OrderBy(c => c.Kategorija))
+                            {
+                        <tr>
+                            <td>@c.Kategorija.ToString()</td>
+                            <td>@c.TrajanjeH h</td>
+                            <td>@c.Iznos.ToString("F2") KM</td>
+                        </tr>
+                            }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    }
+
+    @if (Model.Cvjecara != null)
+    {
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-success text-white">Aranžmani</div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead><tr><th>Aranžman</th><th>Tip</th><th>Cijena</th></tr></thead>
+                    <tbody>
+                        @foreach (var a in Model.Cvjecara.Aranzmani)
+                            {
+                        <tr>
+                            <td>@a.Naziv</td>
+                            <td>@a.Tip.ToString()</td>
+                            <td>@a.Cijena.ToString("F2") KM</td>
+                        </tr>
+                            }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    }
+</div>
