@@ -1,0 +1,18 @@
+﻿@model WeddingPlanner.Core.Models.Dogadaj
+@{
+    ViewData["Title"] = "Obriši događaj";
+}
+
+<div class="alert alert-danger">
+    <h4>Potvrda brisanja</h4>
+    <p>Sigurno želite obrisati događaj za <strong>@Model.NazivPara</strong>?</p>
+    <p class="text-muted">Datum: @Model.DatumDogadaja.ToString("dd.MM.yyyy")</p>
+</div>
+
+<form asp-action="Obrisi">
+    <input asp-for="Id" type="hidden" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">Da, obriši</button>
+        <a asp-action="Index" class="btn btn-secondary">Odustani</a>
+    </div>
+</form>

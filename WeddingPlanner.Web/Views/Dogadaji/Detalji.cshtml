@@ -1,0 +1,43 @@
+﻿@model WeddingPlanner.Core.Models.Dogadaj
+@{
+    ViewData["Title"] = Model.NazivPara;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>@Model.NazivPara</h2>
+    <div>
+        <a asp-controller="Racun" asp-action="Index" asp-route-dogadajId="@Model.Id" class="btn btn-primary">Račun</a>
+        <a asp-action="Uredi" asp-route-id="@Model.Id" class="btn btn-warning">Uredi</a>
+        <a asp-action="Index" class="btn btn-secondary">Nazad</a>
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Datum</dt>
+            <dd class="col-sm-9">@Model.DatumDogadaja.ToString("dd.MM.yyyy")</dd>
+            <dt class="col-sm-3">Tip vjenčanja</dt>
+            <dd class="col-sm-9"><span class="badge bg-info text-dark">@Model.TipVjencanja.Naziv</span></dd>
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">@Model.Status.ToString()</dd>
+            <dt class="col-sm-3">Ukupan trošak</dt>
+            <dd class="col-sm-9"><strong>@(((decimal)ViewBag.Ukupno).ToString("F2")) KM</strong></dd>
+        </dl>
+    </div>
+</div>
+
+<h5>Rezervacije bendova</h5>
+<table class="table table-sm">
+    <thead><tr><th>Bend</th><th>Datum</th><th>Potvrđeno</th></tr></thead>
+    <tbody>
+        @foreach (var r in Model.Rezervacije)
+        {
+            <tr>
+                <td>@r.Bend.Partner.Naziv</td>
+                <td>@r.Datum.ToString("dd.MM.yyyy")</td>
+                <td>@(r.Potvrdena ? "Da" : "Ne")</td>
+            </tr>
+        }
+    </tbody>
+</table>

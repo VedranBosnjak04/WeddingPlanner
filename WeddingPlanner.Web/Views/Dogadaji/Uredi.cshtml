@@ -1,0 +1,49 @@
+﻿@model WeddingPlanner.Core.Models.Dogadaj
+@{
+    ViewData["Title"] = "Uredi događaj";
+}
+
+<h2>Uredi: @Model.NazivPara</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Uredi">
+            <input asp-for="Id" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="NazivPara" class="form-label">Naziv para</label>
+                <input asp-for="NazivPara" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="DatumDogadaja" class="form-label">Datum</label>
+                <input asp-for="DatumDogadaja" class="form-control" type="date" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="TipVjencanjaId" class="form-label">Tip vjenčanja</label>
+                <select asp-for="TipVjencanjaId" class="form-select" asp-items="ViewBag.TipoviVjencanja"></select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Status" class="form-label">Status</label>
+                <select asp-for="Status" class="form-select"
+                        asp-items="Html.GetEnumSelectList<WeddingPlanner.Core.Models.StatusDogadaja>()"></select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Napomena" class="form-label">Napomena</label>
+                <textarea asp-for="Napomena" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-warning">Ažuriraj</button>
+                <a asp-action="Index" class="btn btn-secondary">Odustani</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
