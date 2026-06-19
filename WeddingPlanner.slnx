@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="WeddingPlanner.API/WeddingPlanner.API.csproj" />
+  <Project Path="WeddingPlanner.Core/WeddingPlanner.Core.csproj" />
+  <Project Path="WeddingPlanner.Infrastructure/WeddingPlanner.Infrastructure.csproj" />
+  <Project Path="WeddingPlanner.Tests/WeddingPlanner.Tests.csproj" />
+  <Project Path="WeddingPlanner.Web/WeddingPlanner.Web.csproj" />
+</Solution>
