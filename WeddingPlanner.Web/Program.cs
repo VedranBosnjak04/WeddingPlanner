@@ -6,6 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddScoped<WeddingPlanner.Infrastructure.Services.BendService>();
+builder.Services.AddScoped<WeddingPlanner.Infrastructure.Services.TipVjencanjaService>();
+builder.Services.AddScoped<WeddingPlanner.Infrastructure.Services.ExcelService>();
+builder.Services.AddScoped<WeddingPlanner.Infrastructure.Services.PdfService>();
 
 var app = builder.Build();
 
