@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Import partnera iz Excela";
+}
+
+<h2>Import partnera iz Excel datoteke</h2>
+<hr/>
+
+@if (TempData["Uspjeh"] != null)
+{
+    <div class="alert alert-success">@TempData["Uspjeh"]</div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                Učitaj Excel datoteku
+            </div>
+            <div class="card-body">
+                <form asp-action="ImportPartnere" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label">Odaberi .xlsx datoteku</label>
+                        <input type="file" name="file" class="form-control" accept=".xlsx" />
+                        <div class="form-text">
+                            Datoteka mora imati kolone: ID, Naziv, Tip, Adresa, Kontakt, Provizija %
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Uvezi partnere</button>
+                    <a asp-controller="Partneri" asp-action="Index" class="btn btn-secondary">Odustani</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                Export partnera u Excel
+            </div>
+            <div class="card-body">
+                <p>Preuzmi listu svih partnera kao Excel datoteku.</p>
+                <a asp-action="ExportPartnere" class="btn btn-primary">
+                    Preuzmi Excel
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
