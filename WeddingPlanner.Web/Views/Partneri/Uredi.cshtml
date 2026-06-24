@@ -1,0 +1,51 @@
+@model WeddingPlanner.Core.Models.Partner
+@using WeddingPlanner.Core.Models
+@{
+    ViewData["Title"] = "Uredi partnera";
+}
+
+<h2>Uredi: @Model.Naziv</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Uredi">
+            <input asp-for="Id" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Naziv" class="form-label">Naziv</label>
+                <input asp-for="Naziv" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Adresa" class="form-label">Adresa</label>
+                <input asp-for="Adresa" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Kontakt" class="form-label">Kontakt</label>
+                <input asp-for="Kontakt" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Tip" class="form-label">Tip partnera</label>
+                <select asp-for="Tip" class="form-select" asp-items="Html.GetEnumSelectList<TipPartnera>()"></select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Provizija" class="form-label">Provizija (%)</label>
+                <input asp-for="Provizija" class="form-control" type="number" step="0.1" min="0" max="100" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="DodatniPodaci" class="form-label">Dodatni podaci (JSON)</label>
+                <textarea asp-for="DodatniPodaci" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-warning">Ažuriraj</button>
+                <a asp-action="Index" class="btn btn-secondary">Odustani</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

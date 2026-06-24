@@ -1,0 +1,51 @@
+﻿@model WeddingPlanner.Core.Models.Dogadaj
+@{
+    ViewData["Title"] = "Račun - " + Model.NazivPara;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Račun za: @Model.NazivPara</h2>
+    <div>
+        <a asp-action="DodajStavku" asp-route-dogadajId="@Model.Id" class="btn btn-success">Dodaj stavku</a>
+        <a asp-controller="Dogadaji" asp-action="Detalji" asp-route-id="@Model.Id" class="btn btn-secondary">Nazad</a>
+    </div>
+</div>
+
+<table class="table table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Opis</th>
+            <th>Tip</th>
+            <th>Iznos</th>
+            <th>Provizija %</th>
+            <th>Ukupno</th>
+            <th>Akcije</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model.RacunStavke)
+        {
+            decimal ukupno = s.IznosOsnovni + s.IznosOsnovni * s.Provizija / 100;
+            <tr>
+                <td>@s.Opis</td>
+                <td>@s.Tip.ToString()</td>
+                <td>@s.IznosOsnovni.ToString("F2") KM</td>
+                <td>@s.Provizija.ToString("F1")%</td>
+                <td><strong>@ukupno.ToString("F2") KM</strong></td>
+                <td>
+                    <a asp-action="UrediStavku" asp-route-id="@s.Id" class="btn btn-sm btn-outline-warning">Uredi</a>
+                    <form asp-action="ObrisiStavku" method="post" style="display:inline">
+                        <input type="hidden" name="id" value="@s.Id" />
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Obriši</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr class="table-success">
+            <td colspan="4"><strong>SVEUKUPNO</strong></td>
+            <td colspan="2"><strong>@(((decimal)ViewBag.Ukupno).ToString("F2")) KM</strong></td>
+        </tr>
+    </tfoot>
+</table>

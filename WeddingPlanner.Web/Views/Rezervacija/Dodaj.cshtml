@@ -1,0 +1,34 @@
+﻿@model WeddingPlanner.Core.Models.Rezervacija
+@{
+    ViewData["Title"] = "Rezerviši bend";
+    var dogadaj = (WeddingPlanner.Core.Models.Dogadaj)ViewBag.Dogadaj;
+}
+
+<h2>Rezerviši bend za: @dogadaj.NazivPara</h2>
+<p class="text-muted">Datum događaja: @dogadaj.DatumDogadaja.ToString("dd.MM.yyyy")</p>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Dodaj">
+            <input asp-for="DogadajId" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="BendId" class="form-label">Slobodni bendovi za ovaj datum</label>
+                <select asp-for="BendId" class="form-select" asp-items="ViewBag.SlobodniBendovi">
+                    <option value="">-- Odaberi bend --</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Datum" class="form-label">Datum</label>
+                <input asp-for="Datum" class="form-control" type="date" />
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success">Rezerviši</button>
+                <a asp-controller="Dogadaji" asp-action="Detalji" asp-route-id="@Model.DogadajId" class="btn btn-secondary">Odustani</a>
+            </div>
+        </form>
+    </div>
+</div>
