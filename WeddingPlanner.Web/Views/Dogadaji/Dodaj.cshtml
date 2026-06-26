@@ -1,47 +1,165 @@
 ﻿@model WeddingPlanner.Core.Models.Dogadaj
 @{
-    ViewData["Title"] = "Dodaj događaj";
+    ViewData["Title"] = "Novo vjenčanje";
 }
 
-<h2>Dodaj novo vjenčanje/događaj</h2>
-<hr />
-
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Dodaj">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="mb-3">
-                <label asp-for="NazivPara" class="form-label">Naziv para (npr. Ana &amp; Marko)</label>
-                <input asp-for="NazivPara" class="form-control" />
-            </div>
-            <div class="mb-3">
-                <label asp-for="DatumDogadaja" class="form-label">Datum događaja</label>
-                <input asp-for="DatumDogadaja" class="form-control" type="date" />
-            </div>
-            <div class="mb-3">
-                <label asp-for="TipVjencanjaId" class="form-label">Tip vjenčanja</label>
-                <select asp-for="TipVjencanjaId" class="form-select" asp-items="ViewBag.TipoviVjencanja">
-                    <option value="">-- Odaberi tip --</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Status" class="form-label">Status</label>
-                <select asp-for="Status" class="form-select"
-                        asp-items="Html.GetEnumSelectList<WeddingPlanner.Core.Models.StatusDogadaja>()"></select>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Napomena" class="form-label">Napomena</label>
-                <textarea asp-for="Napomena" class="form-control" rows="3"></textarea>
-            </div>
-
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-success">Spremi</button>
-                <a asp-action="Index" class="btn btn-secondary">Odustani</a>
-            </div>
-        </form>
-    </div>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Novo vjenčanje / događaj</h2>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="bi bi-arrow-left me-1"></i> Nazad
+    </a>
 </div>
+
+<form asp-action="Dodaj">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4"></div>
+
+    <div class="row g-4">
+
+        <!-- LIJEVA KOLONA -->
+        <div class="col-md-6">
+
+            <!-- Osnovni podaci -->
+            <div class="card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <i class="bi bi-heart me-2"></i> Osnovni podaci
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="NazivPara" class="form-label">Naziv para</label>
+                        <input asp-for="NazivPara" class="form-control"
+                               placeholder="npr. Ana & Marko" />
+                        <span asp-validation-for="NazivPara" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="DatumDogadaja" class="form-label">Datum vjenčanja</label>
+                        <input asp-for="DatumDogadaja" class="form-control" type="date" />
+                        <span asp-validation-for="DatumDogadaja" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="TipVjencanjaId" class="form-label">Tip vjenčanja</label>
+                        <select asp-for="TipVjencanjaId" class="form-select"
+                                asp-items="ViewBag.TipoviVjencanja">
+                            <option value="">-- Odaberi tip --</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Status" class="form-label">Status</label>
+                        <select asp-for="Status" class="form-select"
+                                asp-items="Html.GetEnumSelectList<WeddingPlanner.Core.Models.StatusDogadaja>()">
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Napomena" class="form-label">Napomena</label>
+                        <textarea asp-for="Napomena" class="form-control" rows="2"
+                                  placeholder="Posebni zahtjevi..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Glazba -->
+            <div class="card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <i class="bi bi-music-note-beamed me-2"></i> Glazba — Bend / DJ
+                </div>
+                <div class="card-body">
+                    <div class="mb-2">
+                        <label class="form-label">Odaberi bend ili DJ-a</label>
+                        <select name="odabraniiBendId" class="form-select">
+                            <option value="">-- Bez glazbe (dodaj kasnije) --</option>
+                            @if (ViewBag.SlobodniBendovi != null)
+                            {
+                                foreach (SelectListItem item in ViewBag.SlobodniBendovi)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-text text-muted">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Prikazuju se samo slobodni bendovi. Sistem automatski provjerava koliziju — isti bend ne može biti rezerviran dva puta za isti datum.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- DESNA KOLONA -->
+        <div class="col-md-6">
+
+            <!-- Slastičarnica -->
+            <div class="card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <i class="bi bi-cake2 me-2"></i> Slastičarnica
+                </div>
+                <div class="card-body">
+                    <div class="mb-2">
+                        <label class="form-label">Odaberi slastičarnicu</label>
+                        <select name="odabranSlasticarnicaId" class="form-select">
+                            <option value="">-- Bez slastičarnice (dodaj kasnije) --</option>
+                            @if (ViewBag.Slasticarnice != null)
+                            {
+                                foreach (SelectListItem item in ViewBag.Slasticarnice)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-text text-muted">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Odabrana slastičarnica bit će automatski dodana u račun događaja.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Salon / Restoran -->
+            <div class="card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <i class="bi bi-building me-2"></i> Svadbeni salon / Restoran
+                </div>
+                <div class="card-body">
+                    <div class="mb-2">
+                        <label class="form-label">Odaberi salon ili restoran</label>
+                        <select name="odabranRestaurantId" class="form-select">
+                            <option value="">-- Bez salona (dodaj kasnije) --</option>
+                            @if (ViewBag.RestaurantSaloni != null)
+                            {
+                                foreach (SelectListItem item in ViewBag.RestaurantSaloni)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-text text-muted">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Cijena salona bit će automatski dodana u račun događaja.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Napomena o koliziji -->
+            <div class="alert" style="background:#1a0a2e;color:rgba(255,255,255,0.8);border-radius:12px;font-size:0.88rem;">
+                <i class="bi bi-shield-check me-2" style="color:#34d399;"></i>
+                <strong style="color:#c084fc;">Zaštita od kolizije</strong><br>
+                Sistem automatski provjerava dostupnost benda — ako je bend već rezerviran za odabrani datum, nećete moći potvrditi rezervaciju i dobit ćete upozorenje.
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Dugmad -->
+    <div class="d-flex gap-3 mt-2 mb-4">
+        <button type="submit" class="btn btn-success px-5">
+            <i class="bi bi-check-circle me-1"></i> Kreiraj vjenčanje
+        </button>
+        <a asp-action="Index" class="btn btn-secondary px-4">
+            Odustani
+        </a>
+    </div>
+
+</form>
 
 @section Scripts {
     @{

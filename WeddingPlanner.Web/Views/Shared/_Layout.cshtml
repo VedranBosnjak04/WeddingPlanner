@@ -1,49 +1,110 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="hr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WeddingPlanner.Web</title>
+    <title>@ViewData["Title"] - Wedding Planner</title>
+    <link rel="icon" type="image/svg+xml" href="~/images/logo.svg" />
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WeddingPlanner.Web.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WeddingPlanner.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+        <nav class="navbar navbar-expand-lg navbar-dark wedding-navbar">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.svg" alt="Wedding Planner" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav" aria-controls="navbarNav"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Partneri" asp-action="Index">Partneri</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-house-heart"></i> Početna
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Bendovi" asp-action="Index">Bendovi/DJ</a>
+                            <a class="nav-link" asp-controller="Dogadaji" asp-action="Index">
+                                <i class="bi bi-calendar-heart"></i> Događaji
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-grid"></i> Partneri
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end wedding-dropdown">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Partneri" asp-action="Index">
+                                        <i class="bi bi-people me-2"></i> Svi partneri
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Bendovi" asp-action="Index">
+                                        <i class="bi bi-music-note-beamed me-2"></i> Bendovi / DJ
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Partneri" asp-action="Index" asp-route-filter="Cvjecara">
+                                        <i class="bi bi-flower1 me-2"></i> Cvjećare
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Partneri" asp-action="Index" asp-route-filter="Slasticarnica">
+                                        <i class="bi bi-cake2 me-2"></i> Slastičarnice
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Partneri" asp-action="Index" asp-route-filter="Catering">
+                                        <i class="bi bi-basket me-2"></i> Catering
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Partneri" asp-action="Index" asp-route-filter="RestaurantSalon">
+                                        <i class="bi bi-building me-2"></i> Restorani / Saloni
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-success" asp-controller="Partneri" asp-action="Dodaj">
+                                        <i class="bi bi-plus-circle me-2"></i> Dodaj partnera
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Dogadaji" asp-action="Index">Događaji</a>
+                            <a class="nav-link" asp-controller="Excel" asp-action="ImportPartnere">
+                                <i class="bi bi-file-earmark-excel"></i> Excel
+                            </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <div class="container mt-4 mb-5">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - WeddingPlanner.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+    <footer class="wedding-footer">
+        <div class="container text-center">
+            <span class="text-muted">
+                Wedding Planner Agency &copy; 2026 — Organiziramo savršene trenutke
+            </span>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

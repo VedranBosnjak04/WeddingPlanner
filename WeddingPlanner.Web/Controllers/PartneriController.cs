@@ -21,7 +21,18 @@ public class PartneriController : Controller
         var query = _db.Partneri.AsQueryable();
 
         if (!string.IsNullOrEmpty(filter))
-            query = query.Where(p => p.Naziv.Contains(filter) || p.Kontakt.Contains(filter));
+        {
+            // Provjeri je li filter tip partnera (npr. Cvjecara, Slasticarnica...)
+            if (Enum.TryParse<TipPartnera>(filter, out var tipFilter))
+            {
+                query = query.Where(p => p.Tip == tipFilter);
+            }
+            else
+            {
+                // Inače pretraži po nazivu ili kontaktu
+                query = query.Where(p => p.Naziv.Contains(filter) || p.Kontakt.Contains(filter));
+            }
+        }
 
         ViewBag.CurrentSort = sort;
         ViewBag.CurrentFilter = filter;
