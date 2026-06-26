@@ -1,8 +1,112 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Početna";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="hero-section">
+    <img src="~/images/wedding_planner_logo.svg" alt="Wedding Planner" class="hero-logo" />
+    <h1>Wedding <span>Planner</span></h1>
+    <p>Vaša pouzdana agencija za organizaciju savršenih vjenčanja i posebnih događaja</p>
+    <a asp-controller="Dogadaji" asp-action="Index" class="btn btn-light btn-lg px-4 me-2">
+        <i class="bi bi-calendar-heart me-1"></i> Pogledaj događaje
+    </a>
+    <a asp-controller="Partneri" asp-action="Index" class="btn btn-outline-light btn-lg px-4">
+        <i class="bi bi-people me-1"></i> Naši partneri
+    </a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="stat-card" style="border-color: #c084fc;">
+            <div class="stat-icon-elegant">
+                <i class="bi bi-heart" style="color:#c084fc;"></i>
+            </div>
+            <div class="stat-number">@ViewBag.BrojDogadaja</div>
+            <div class="stat-label">Vjenčanja</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card" style="border-color: #f472b6;">
+            <div class="stat-icon-elegant">
+                <i class="bi bi-people" style="color:#f472b6;"></i>
+            </div>
+            <div class="stat-number">@ViewBag.BrojPartnera</div>
+            <div class="stat-label">Partnera</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card" style="border-color: #fbbf24;">
+            <div class="stat-icon-elegant">
+                <i class="bi bi-music-note-beamed" style="color:#fbbf24;"></i>
+            </div>
+            <div class="stat-number">@ViewBag.BrojBendova</div>
+            <div class="stat-label">Bendova i DJ-eva</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card" style="border-color: #34d399;">
+            <div class="stat-icon-elegant">
+                <i class="bi bi-flower1" style="color:#34d399;"></i>
+            </div>
+            <div class="stat-number">@ViewBag.BrojCvjecara</div>
+            <div class="stat-label">Cvjećara</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header bg-dark text-white">
+                <i class="bi bi-lightning-charge me-2"></i> Brzi pristup
+            </div>
+            <div class="card-body d-flex flex-column gap-2">
+                <a asp-controller="Dogadaji" asp-action="Dodaj" class="btn btn-success w-100">
+                    <i class="bi bi-plus-circle me-1"></i> Novo vjenčanje
+                </a>
+                <a asp-controller="Partneri" asp-action="Dodaj" class="btn btn-primary w-100">
+                    <i class="bi bi-person-plus me-1"></i> Dodaj partnera
+                </a>
+                <a asp-controller="Bendovi" asp-action="Index" class="btn btn-outline-primary w-100">
+                    <i class="bi bi-music-note-beamed me-1"></i> Pregledaj bendove
+                </a>
+                <a asp-controller="Excel" asp-action="ImportPartnere" class="btn btn-secondary w-100">
+                    <i class="bi bi-file-earmark-excel me-1"></i> Excel import / export
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card h-100">
+            <div class="card-header bg-dark text-white">
+                <i class="bi bi-info-circle me-2"></i> O aplikaciji
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-3" style="font-size:0.92rem;">
+                    Wedding Planner je sveobuhvatna platforma za upravljanje vjenčanjima i posebnim događajima.
+                </p>
+                <ul class="list-unstyled" style="font-size:0.9rem;">
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle-fill me-2" style="color:#059669;"></i>
+                        Upravljanje partnerima — bendovi, cvjećare, slastičarnice, catering
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle-fill me-2" style="color:#059669;"></i>
+                        Rezervacija bendova s provjerom dostupnosti
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle-fill me-2" style="color:#059669;"></i>
+                        Praćenje troškova i provizija po događaju
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle-fill me-2" style="color:#059669;"></i>
+                        Export računa i ponuda u Excel i PDF
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle-fill me-2" style="color:#059669;"></i>
+                        REST API i GraphQL za vanjske integracije
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
